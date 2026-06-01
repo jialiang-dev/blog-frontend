@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir -p /home/alvin/projects/blog-backend/src/main/java/dev/jialiang)",
+      "Bash(mv /home/alvin/projects/blog-backend/src/main/java/com/yourdomain/personalsite /home/alvin/projects/blog-backend/src/main/java/dev/jialiang/)",
+      "Bash(rm -rf /home/alvin/projects/blog-backend/src/main/java/com)"
+    ]
+  }
+}
