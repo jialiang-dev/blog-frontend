@@ -1,6 +1,6 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
-import axios from 'axios'
+import api from '../api.js'
 
 // ═══════════════════════════════════════════
 // 颜色
@@ -32,7 +32,7 @@ let stockTimer = null
 async function fetchStockQuotes() {
   const codes = WATCHLIST.map(s => s.sinaCode).join(',')
   try {
-    const { data } = await axios.get(`http://localhost:8080/api/finance/stock-quotes?codes=${codes}`)
+    const { data } = await api.get(`/api/finance/stock-quotes?codes=${codes}`)
     if (data.code === 200 && data.data.length) {
       data.data.forEach(item => {
         if (stockData[item.code]) {
@@ -69,7 +69,7 @@ function fmtPrice(v) {
 let idxTimer = null
 async function fetchIndices() {
   try {
-    const { data } = await axios.get('http://localhost:8080/api/finance/indices')
+    const { data } = await api.get('/api/finance/indices')
     if (data.code === 200 && data.data.length) {
       indexData.splice(0, indexData.length, ...data.data)
     }
@@ -82,7 +82,7 @@ async function fetchIndices() {
 const newsItems = ref([])
 async function fetchNews() {
   try {
-    const { data } = await axios.get('http://localhost:8080/api/finance/news')
+    const { data } = await api.get('/api/finance/news')
     if (data.code === 200) newsItems.value = data.data
   } catch { /* 后端不可用 */ }
 }
@@ -122,14 +122,57 @@ function startWisdomRotation() {
 // ═══════════════════════════════════════════
 // 便利贴
 // ═══════════════════════════════════════════
+const NOTES_STORAGE_KEY = 'market-notes-local'
+
+function loadLocalNotes() {
+  try {
+    return JSON.parse(localStorage.getItem(NOTES_STORAGE_KEY) || '[]')
+  } catch { return [] }
+}
+
+function saveLocalNotes(localNotes) {
+  localStorage.setItem(NOTES_STORAGE_KEY, JSON.stringify(localNotes))
+}
+
 const notes = ref([])
-const API = 'http://localhost:8080/api/market-notes'
+const API = '/api/market-notes'
 
 async function fetchNotes() {
+  // 先从本地取出离线保存的
+  const localNotes = loadLocalNotes()
+
   try {
-    const { data } = await axios.get(API)
-    if (data.code === 200) notes.value = data.data
-  } catch { /* 后端不可用，notes 保持空 */ }
+    const { data } = await api.get(API)
+    if (data.code === 200) {
+      // 尝试把离线笔记同步到服务端
+      syncLocalToServer(localNotes)
+      // 合并：服务端数据 + 尚未同步的本地数据
+      const serverIds = new Set(data.data.map(n => n.id))
+      const pending = localNotes.filter(n => !serverIds.has(n.id))
+      notes.value = [...pending, ...data.data]
+      return
+    }
+  } catch (e) {
+    console.warn('后端不可用，使用本地数据', e)
+  }
+  // 后端不可用，显示本地数据
+  notes.value = localNotes
+}
+
+async function syncLocalToServer(localNotes) {
+  for (const note of localNotes) {
+    try {
+      const payload = { title: note.title, content: note.content, assetCode: note.assetCode, color: note.color }
+      const { data } = await api.post(API, payload)
+      if (data.code === 200) {
+        // 同步成功，更新 ID 并从本地移除
+        note.id = data.data.id
+        note.synced = true
+      }
+    } catch { /* 网络不通，保留在本地 */ }
+  }
+  // 清理已同步的
+  saveLocalNotes(localNotes.filter(n => !n.synced))
 }
 
 function addNote() {
@@ -144,30 +187,51 @@ function addNote() {
 async function saveNote(note) {
   if (!note.title?.trim() && !note.content?.trim()) {
     notes.value = notes.value.filter(n => n.id !== note.id)
+    removeLocalNote(note.id)
     return
   }
   const payload = { title: note.title, content: note.content, assetCode: note.assetCode, color: note.color }
   try {
     if (note._new) {
-      const { data } = await axios.post(API, payload)
-      if (data.code === 200) Object.assign(note, data.data, { _new: false, _editing: false })
+      const { data } = await api.post(API, payload)
+      if (data.code === 200) {
+        Object.assign(note, data.data, { _new: false, _editing: false })
+        return
+      }
     } else {
-      await axios.put(`${API}/${note.id}`, payload)
+      await api.put(`${API}/${note.id}`, payload)
       note._editing = false
+      return
     }
-  } catch {
-    // 后端不可用，本地保存
-    note._new = false
-    note._editing = false
-    note.updatedAt = new Date().toISOString()
+  } catch (e) {
+    console.warn('保存到服务端失败，暂存本地', e)
   }
+  // 网络不通 — 存到 localStorage
+  note._new = false
+  note._editing = false
+  note.updatedAt = new Date().toISOString()
+  upsertLocalNote(note)
+}
+
+function upsertLocalNote(note) {
+  const local = loadLocalNotes()
+  const idx = local.findIndex(n => n.id === note.id)
+  const plain = { id: note.id, title: note.title, content: note.content, assetCode: note.assetCode, color: note.color, createdAt: note.createdAt, updatedAt: note.updatedAt }
+  if (idx >= 0) local[idx] = plain
+  else local.unshift(plain)
+  saveLocalNotes(local)
+}
+
+function removeLocalNote(id) {
+  saveLocalNotes(loadLocalNotes().filter(n => n.id !== id))
 }
 
 async function deleteNote(note) {
   try {
-    await axios.delete(`${API}/${note.id}`)
+    await api.delete(`${API}/${note.id}`)
   } catch {}
   notes.value = notes.value.filter(n => n.id !== note.id)
+  removeLocalNote(note.id)
 }
 
 function setNoteColor(note, color) {
