@@ -137,42 +137,68 @@ function saveLocalNotes(localNotes) {
 const notes = ref([])
 const API = '/api/market-notes'
 
+function isServerId(id) {
+  // 服务端返回的是数字 ID，本地新建的是 'new-...' 字符串
+  return typeof id === 'number' || (typeof id === 'string' && /^\d+$/.test(id))
+}
+
 async function fetchNotes() {
-  // 先从本地取出离线保存的
   const localNotes = loadLocalNotes()
 
   try {
     const { data } = await api.get(API)
     if (data.code === 200) {
-      // 尝试把离线笔记同步到服务端
-      syncLocalToServer(localNotes)
-      // 合并：服务端数据 + 尚未同步的本地数据
-      const serverIds = new Set(data.data.map(n => n.id))
-      const pending = localNotes.filter(n => !serverIds.has(n.id))
-      notes.value = [...pending, ...data.data]
+      const serverNotes = data.data
+      const serverIds = new Set(serverNotes.map(n => String(n.id)))
+
+      // 把本地编辑过的服务端笔记 PUT 回去
+      for (const ln of localNotes) {
+        if (isServerId(ln.id) && serverIds.has(String(ln.id))) {
+          // 本地有更新版本 → PUT 到服务端
+          try {
+            await api.put(`${API}/${ln.id}`, {
+              title: ln.title, content: ln.content, assetCode: ln.assetCode, color: ln.color
+            })
+            // PUT 成功，标记为已同步，用服务端数据替代
+            ln.synced = true
+          } catch { /* 网络不通，保留在本地 */ }
+        }
+      }
+
+      // 把纯本地笔记（new-xxx）POST 到服务端
+      for (const ln of localNotes) {
+        if (!isServerId(ln.id)) {
+          try {
+            const { data: res } = await api.post(API, {
+              title: ln.title, content: ln.content, assetCode: ln.assetCode, color: ln.color
+            })
+            if (res.code === 200) {
+              ln.id = res.data.id
+              ln.createdAt = res.data.createdAt
+              ln.updatedAt = res.data.updatedAt
+              ln.synced = true
+            }
+          } catch { /* 网络不通 */ }
+        }
+      }
+
+      saveLocalNotes(localNotes.filter(n => !n.synced))
+
+      // 合并：本地未同步的 + 服务端数据
+      const syncedIds = new Set(localNotes.filter(n => n.synced).map(n => String(n.id)))
+      const pending = localNotes.filter(n => !n.synced)
+      // 用服务端数据替换已同步的本地笔记
+      const merged = serverNotes.map(sn => {
+        const local = localNotes.find(ln => String(ln.id) === String(sn.id) && ln.synced)
+        return local ? { ...sn, title: local.title, content: local.content, assetCode: local.assetCode, color: local.color } : sn
+      })
+      notes.value = [...pending, ...merged]
       return
     }
   } catch (e) {
     console.warn('后端不可用，使用本地数据', e)
   }
-  // 后端不可用，显示本地数据
   notes.value = localNotes
-}
-
-async function syncLocalToServer(localNotes) {
-  for (const note of localNotes) {
-    try {
-      const payload = { title: note.title, content: note.content, assetCode: note.assetCode, color: note.color }
-      const { data } = await api.post(API, payload)
-      if (data.code === 200) {
-        // 同步成功，更新 ID 并从本地移除
-        note.id = data.data.id
-        note.synced = true
-      }
-    } catch { /* 网络不通，保留在本地 */ }
-  }
-  // 清理已同步的
-  saveLocalNotes(localNotes.filter(n => !n.synced))
 }
 
 function addNote() {
