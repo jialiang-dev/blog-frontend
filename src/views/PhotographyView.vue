@@ -112,8 +112,8 @@ function toggleAlbum(albumId) {
 
 <style scoped>
 .photos-page {
-  background: #f7f7f5;
-  color: #1a1a1a;
+  background: var(--bg-primary);
+  color: var(--text-primary);
 }
 
 /* ── 顶栏 ── */
@@ -125,11 +125,11 @@ function toggleAlbum(albumId) {
 }
 .back-link {
   font-size: 0.88rem;
-  color: #78716c;
+  color: var(--text-muted);
   text-decoration: none;
   transition: color 0.2s;
 }
-.back-link:hover { color: #1a1a1a; }
+.back-link:hover { color: var(--text-primary); }
 
 /* ── HERO ── */
 .hero {
@@ -141,10 +141,10 @@ function toggleAlbum(albumId) {
   text-align: center;
   padding: 0 20px;
 }
-.eyebrow { letter-spacing: 0.3em; font-size: 12px; color: #888; margin-bottom: 24px; }
+.eyebrow { letter-spacing: 0.3em; font-size: 12px; color: var(--text-light); margin-bottom: 24px; }
 .hero h1 { font-size: 82px; line-height: 1.1; font-weight: 700; margin-bottom: 30px; }
-.subtitle { color: #666; font-size: 18px; }
-.scroll-tip { position: absolute; bottom: 50px; color: #999; font-size: 14px; }
+.subtitle { color: var(--text-muted); font-size: 18px; }
+.scroll-tip { position: absolute; bottom: 50px; color: var(--text-light); font-size: 14px; }
 
 /* ── FEATURED ── */
 .featured { padding: 120px 10%; }
@@ -162,13 +162,13 @@ function toggleAlbum(albumId) {
 .photo-block img:hover { transform: scale(1.01); }
 .info { flex: 1; }
 .info h2 { font-size: 48px; margin-bottom: 12px; }
-.info p { color: #666; font-size: 18px; }
+.info p { color: var(--text-muted); font-size: 18px; }
 
 /* ── ALBUMS ── */
 .albums-section { padding: 60px 10% 150px; }
 .albums-header { margin-bottom: 48px; }
 .albums-header h2 { font-size: 48px; margin-bottom: 10px; }
-.albums-header p { color: #666; font-size: 17px; }
+.albums-header p { color: var(--text-muted); font-size: 17px; }
 
 .albums-grid {
   display: grid;
@@ -180,13 +180,13 @@ function toggleAlbum(albumId) {
 .album-card {
   border-radius: 20px;
   overflow: hidden;
-  background: #fff;
-  border: 1px solid rgba(0,0,0,0.06);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card-alt);
   transition: box-shadow 0.3s;
 }
 .album-card.expanded {
   grid-column: 1 / -1;
-  box-shadow: 0 4px 24px rgba(0,0,0,0.04);
+  box-shadow: 0 4px 24px var(--shadow-card-hover);
 }
 
 .album-cover {
@@ -247,7 +247,7 @@ function toggleAlbum(albumId) {
   display: block;
   padding: 8px 4px 4px;
   font-size: 0.82rem;
-  color: #78716c;
+  color: var(--text-muted);
 }
 
 /* ── MOBILE ── */

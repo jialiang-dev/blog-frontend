@@ -160,7 +160,7 @@ onUnmounted(() => {
 
   overflow: hidden;
 
-  background: #f7f7f5;
+  background: var(--bg-primary);
 
   font-family:
     Inter,
@@ -169,7 +169,7 @@ onUnmounted(() => {
     "PingFang SC",
     sans-serif;
 
-  color: #1a1a1a;
+  color: var(--text-primary);
 }
 
 /* 背景光晕 — 全程 GPU 合成层，不触发 Layout/Paint */
@@ -192,6 +192,11 @@ onUnmounted(() => {
   filter: blur(40px);
   will-change: transform;
   z-index: 0;
+}
+
+/* 暗色模式：去掉光晕 */
+html.dark .glow {
+  display: none;
 }
 
 /* 左右布局 */
@@ -224,7 +229,7 @@ onUnmounted(() => {
   font-size: 12px;
   letter-spacing: 0.2em;
 
-  color: #666;
+  color: var(--text-muted);
 }
 
 .dot {
@@ -252,7 +257,7 @@ h1 {
 
 .role {
   font-size: 16px;
-  color: #666;
+  color: var(--text-muted);
 
   margin-bottom: 36px;
 
@@ -265,7 +270,7 @@ h1 {
   font-size: 17px;
   line-height: 1.9;
 
-  color: #444;
+  color: var(--text-secondary);
 
   margin-bottom: 40px;
 }
@@ -280,7 +285,7 @@ h1 {
   position: relative;
 
   text-decoration: none;
-  color: #222;
+  color: var(--text-heading);
 
   font-size: 15px;
 
@@ -297,7 +302,7 @@ h1 {
   width: 0%;
   height: 1px;
 
-  background: #222;
+  background: var(--text-heading);
 
   transition: width 0.3s ease;
 }
@@ -321,9 +326,9 @@ h1 {
   text-decoration: none;
   color: inherit;
 
-  background: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(0, 0, 0, 0.06);
-  box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+  background: var(--bg-overlay);
+  border: 1px solid var(--border-card-alt);
+  box-shadow: 0 1px 3px var(--shadow-card);
 
   transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
 
@@ -351,9 +356,9 @@ h1 {
   transform: translateY(-8px);
 
   box-shadow:
-    0 10px 40px rgba(0,0,0,0.06);
+    0 10px 40px var(--shadow-card-hover);
 
-  background: rgba(255,255,255,0.92);
+  background: var(--bg-card-hover);
 }
 
 .nav-card:hover::before {
@@ -365,7 +370,7 @@ h1 {
 
   letter-spacing: 0.2em;
 
-  color: #999;
+  color: var(--text-light);
 
   margin-right: 24px;
 }
@@ -383,7 +388,7 @@ h1 {
 }
 
 .content p {
-  color: #666;
+  color: var(--text-muted);
 
   font-size: 15px;
 }
@@ -391,7 +396,7 @@ h1 {
 .arrow {
   font-size: 22px;
 
-  color: #999;
+  color: var(--text-light);
 
   transition: transform 0.3s ease;
 }
@@ -409,7 +414,7 @@ h1 {
 
   font-size: 13px;
 
-  color: #888;
+  color: var(--text-light);
 
   letter-spacing: 0.08em;
 

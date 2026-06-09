@@ -8,7 +8,7 @@
   font-family: "PingFang SC", "Noto Serif SC", "Source Han Serif SC", Georgia, "Times New Roman", serif;
   font-size: 1.08rem;
   line-height: 1.85;
-  color: #292524;
+  color: var(--text-secondary);
   -webkit-font-smoothing: antialiased;
 }
 
@@ -19,7 +19,7 @@
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 2.2em 0 0.4em;
-  color: #1c1917;
+  color: var(--text-heading);
 }
 .prose h1:first-child { margin-top: 0; }
 
@@ -29,9 +29,9 @@
   font-weight: 650;
   letter-spacing: -0.01em;
   margin: 1.8em 0 0.5em;
-  color: #1c1917;
+  color: var(--text-heading);
   padding-bottom: 0.3em;
-  border-bottom: 1px solid #e7e5e4;
+  border-bottom: 1px solid var(--border-primary);
 }
 
 .prose h3 {
@@ -39,7 +39,7 @@
   font-size: 1.15rem;
   font-weight: 600;
   margin: 1.4em 0 0.4em;
-  color: #44403c;
+  color: var(--text-secondary);
 }
 
 /* ── 段落 ── */
@@ -50,19 +50,19 @@
 /* ── 粗体、斜体 ── */
 .prose strong {
   font-weight: 650;
-  color: #1c1917;
+  color: var(--text-heading);
 }
 .prose em {
   font-style: italic;
-  color: #57534e;
+  color: var(--text-muted);
 }
 
 /* ── 行内代码 ── */
 .prose code {
   font-family: "JetBrains Mono", "Fira Code", "Cascadia Code", Consolas, monospace;
   font-size: 0.88em;
-  background: #f5f5f4;
-  color: #c2410c;
+  background: var(--bg-code-inline);
+  color: var(--text-code-inline);
   padding: 2px 6px;
   border-radius: 4px;
   font-weight: 480;
@@ -75,9 +75,9 @@
   overflow-x: auto;
   font-size: 0.88rem;
   line-height: 1.6;
-  background: #fafaf9;
-  border: 1px solid #e7e5e4;
-  color: #44403c;
+  background: var(--bg-pre);
+  border: 1px solid var(--border-primary);
+  color: var(--text-secondary);
 }
 .prose pre code {
   background: transparent;
@@ -90,39 +90,26 @@
 }
 
 /* ── 自定义语法高亮（与博客色板统一）── */
-/* 关键词         → 蓝，呼应链接色 */
 .prose pre .hljs-keyword,
-.prose pre .hljs-doctag { color: #2563eb; }
-/* 字符串         → 暖棕 */
+.prose pre .hljs-doctag { color: var(--highlight-keyword); }
 .prose pre .hljs-string,
-.prose pre .hljs-regexp { color: #b45309; }
-/* 数字 / 字面量  → 紫 */
+.prose pre .hljs-regexp { color: var(--highlight-string); }
 .prose pre .hljs-number,
-.prose pre .hljs-literal { color: #7c3aed; }
-/* 函数 / 类名    → 青 */
+.prose pre .hljs-literal { color: var(--highlight-number); }
 .prose pre .hljs-title,
-.prose pre .hljs-title.function_ { color: #0d9488; }
-/* 内置对象       → 琥珀 */
+.prose pre .hljs-title.function_ { color: var(--highlight-function); }
 .prose pre .hljs-built_in,
-.prose pre .hljs-symbol { color: #d97706; }
-/* 注释           → 浅灰 */
-.prose pre .hljs-comment { color: #a8a29e; }
-/* 类型           → 金 */
-.prose pre .hljs-type { color: #ca8a04; }
-/* 属性           → 蓝 */
+.prose pre .hljs-symbol { color: var(--highlight-builtin); }
+.prose pre .hljs-comment { color: var(--highlight-comment); }
+.prose pre .hljs-type { color: var(--highlight-type); }
 .prose pre .hljs-attr,
-.prose pre .hljs-attribute { color: #2563eb; }
-/* 运算符 / 标点   → 中灰 */
+.prose pre .hljs-attribute { color: var(--highlight-keyword); }
 .prose pre .hljs-operator,
-.prose pre .hljs-punctuation { color: #78716c; }
-/* 变量           → 正文色 */
-.prose pre .hljs-variable { color: #44403c; }
-/* 标签名         → 青（同函数） */
+.prose pre .hljs-punctuation { color: var(--highlight-operator); }
+.prose pre .hljs-variable { color: var(--highlight-variable); }
 .prose pre .hljs-name,
-.prose pre .hljs-selector-tag { color: #0d9488; }
-/* 选择器 class   → 蓝（同属性） */
-.prose pre .hljs-selector-class { color: #2563eb; }
-/* 强调 / 加粗    同正文 */
+.prose pre .hljs-selector-tag { color: var(--highlight-function); }
+.prose pre .hljs-selector-class { color: var(--highlight-keyword); }
 .prose pre .hljs-emphasis { color: inherit; font-style: italic; }
 .prose pre .hljs-strong { color: inherit; font-weight: 700; }
 
@@ -130,10 +117,10 @@
 .prose blockquote {
   margin: 1.6em 0;
   padding: 16px 24px;
-  border-left: 3px solid #2563eb;
-  background: #f8fafc;
+  border-left: 3px solid var(--accent-blue);
+  background: var(--bg-blockquote);
   border-radius: 0 8px 8px 0;
-  color: #44403c;
+  color: var(--text-muted);
   font-style: italic;
 }
 .prose blockquote p {
@@ -150,7 +137,7 @@
   margin-bottom: 0.3em;
 }
 .prose li::marker {
-  color: #a8a29e;
+  color: var(--text-light);
 }
 
 /* ── 表格 ── */
@@ -163,16 +150,16 @@
 .prose th,
 .prose td {
   padding: 10px 16px;
-  border: 1px solid #e7e5e4;
+  border: 1px solid var(--border-primary);
   text-align: left;
 }
 .prose th {
-  background: #fafaf9;
+  background: var(--bg-pre);
   font-weight: 600;
-  color: #1c1917;
+  color: var(--text-heading);
 }
 .prose tr:nth-child(even) td {
-  background: #fafaf9;
+  background: var(--bg-pre);
 }
 
 /* ── 图片 ── */
@@ -185,7 +172,7 @@
 /* ── 水平线 ── */
 .prose hr {
   border: none;
-  border-top: 1px solid #e7e5e4;
+  border-top: 1px solid var(--border-primary);
   margin: 2em 0;
   text-align: center;
 }
@@ -193,21 +180,21 @@
   content: '·  ·  ·';
   position: relative;
   top: -0.7em;
-  background: #fafaf9;
+  background: var(--bg-pre);
   padding: 0 16px;
-  color: #d6d3d1;
+  color: var(--border-light);
   font-size: 0.8rem;
 }
 
 /* ── 链接 ── */
 .prose a {
-  color: #2563eb;
+  color: var(--link);
   text-decoration: none;
-  border-bottom: 1px solid rgba(37,99,235,0.3);
+  border-bottom: 1px solid color-mix(in srgb, var(--link) 30%, transparent);
   transition: border-color 0.2s;
 }
 .prose a:hover {
-  border-bottom-color: #2563eb;
+  border-bottom-color: var(--link);
 }
 
 /* ── KaTeX 公式 ── */

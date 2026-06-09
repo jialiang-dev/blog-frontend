@@ -50,6 +50,7 @@ function fmt(date) {
 .page {
   min-height: 100vh;
   padding: 100px 24px 80px;
+  background: var(--bg-primary);
 }
 
 /* ── header ── */
@@ -59,11 +60,11 @@ function fmt(date) {
 }
 .back {
   font-size: 0.85rem;
-  color: #a8a29e;
+  color: var(--text-light);
   text-decoration: none;
   transition: color 0.2s;
 }
-.back:hover { color: #292524; }
+.back:hover { color: var(--text-heading); }
 
 .article-title {
   font-family: "PingFang SC", -apple-system, sans-serif;
@@ -71,7 +72,7 @@ function fmt(date) {
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 16px 0 12px;
-  color: #1c1917;
+  color: var(--text-heading);
   line-height: 1.25;
 }
 .article-meta {
@@ -80,13 +81,13 @@ function fmt(date) {
   gap: 10px;
   flex-wrap: wrap;
   font-size: 0.88rem;
-  color: #a8a29e;
+  color: var(--text-light);
 }
 .article-tag {
   font-size: 0.72rem;
   font-weight: 550;
-  color: #78716c;
-  background: #f5f5f4;
+  color: var(--text-muted);
+  background: var(--bg-code-inline);
   padding: 2px 10px;
   border-radius: 6px;
   letter-spacing: 0.03em;
@@ -101,19 +102,19 @@ function fmt(date) {
 }
 .footer-back {
   font-size: 0.9rem;
-  color: #a8a29e;
+  color: var(--text-light);
   text-decoration: none;
   transition: color 0.2s;
 }
-.footer-back:hover { color: #292524; }
+.footer-back:hover { color: var(--text-heading); }
 
 /* ── not found ── */
 .not-found {
   max-width: 400px;
   margin: 120px auto;
   text-align: center;
-  color: #78716c;
+  color: var(--text-muted);
 }
-.not-found h2 { color: #1c1917; margin-bottom: 8px; }
+.not-found h2 { color: var(--text-heading); margin-bottom: 8px; }
 .not-found a { color: #2563eb; text-decoration: none; }
 </style>

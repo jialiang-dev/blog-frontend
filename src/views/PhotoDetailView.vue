@@ -86,8 +86,8 @@ function fmt(date) {
 <style scoped>
 .page {
   min-height: 100vh;
-  background: #f7f7f5;
-  color: #1a1a1a;
+  background: var(--bg-primary);
+  color: var(--text-primary);
   font-family: "PingFang SC", -apple-system, "Noto Serif SC", sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -104,14 +104,14 @@ function fmt(date) {
 }
 .back {
   font-size: 0.88rem;
-  color: #78716c;
+  color: var(--text-muted);
   text-decoration: none;
   transition: color 0.2s;
 }
-.back:hover { color: #1a1a1a; }
+.back:hover { color: var(--text-primary); }
 .counter {
   font-size: 0.8rem;
-  color: #a8a29e;
+  color: var(--text-light);
   font-family: "JetBrains Mono", monospace;
   letter-spacing: 0.04em;
 }
@@ -124,20 +124,20 @@ function fmt(date) {
   z-index: 50;
   width: 44px; height: 44px;
   border-radius: 50%;
-  border: 1px solid rgba(0,0,0,0.08);
-  background: rgba(255,255,255,0.75);
+  border: 1px solid var(--border-card);
+  background: var(--bg-nav-btn);
   backdrop-filter: blur(8px);
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  color: #57534e;
+  color: var(--text-secondary);
   transition: background 0.2s, color 0.2s, box-shadow 0.2s;
 }
 .nav-btn:hover {
-  background: #fff;
-  color: #1a1a1a;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  background: var(--bg-card);
+  color: var(--text-primary);
+  box-shadow: 0 2px 12px var(--shadow-card);
 }
 .nav-prev { left: 20px; }
 .nav-next { right: 20px; }
@@ -154,7 +154,7 @@ function fmt(date) {
   font-weight: 700;
   letter-spacing: -0.015em;
   margin: 0 0 16px;
-  color: #1c1917;
+  color: var(--text-heading);
 }
 .meta {
   display: flex;
@@ -163,16 +163,16 @@ function fmt(date) {
   gap: 8px;
   flex-wrap: wrap;
   font-size: 0.88rem;
-  color: #a8a29e;
+  color: var(--text-light);
   letter-spacing: 0.02em;
   margin-bottom: 36px;
 }
-.sep { color: #d6d3d1; }
+.sep { color: var(--border-light); }
 
 .quote {
   font-size: 1.08rem;
   line-height: 1.9;
-  color: #57534e;
+  color: var(--text-secondary);
   max-width: 480px;
   margin: 0 auto;
   font-family: "Noto Serif SC", "PingFang SC", Georgia, serif;
@@ -200,7 +200,7 @@ function fmt(date) {
 .not-found {
   padding: 200px 24px;
   text-align: center;
-  color: #a8a29e;
+  color: var(--text-light);
 }
 
 @media (max-width: 640px) {

@@ -1,4 +1,8 @@
 <script setup>
+import { useDarkMode } from './composables/useDarkMode.js'
+import DarkModeToggle from './components/DarkModeToggle.vue'
+
+useDarkMode()
 </script>
 
 <template>
@@ -7,6 +11,7 @@
       <component :is="Component" :key="route.path" />
     </transition>
   </router-view>
+  <DarkModeToggle />
 </template>
 
 <style>

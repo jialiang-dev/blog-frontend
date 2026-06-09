@@ -1,0 +1,121 @@
+/* ══════════════════════════════════════════
+   博客色板 —— 亮色 / 暗色两套变量
+   所有颜色只在这里定义，组件引用 var(--xxx)
+   ══════════════════════════════════════════ */
+
+:root {
+  /* ── 背景 ── */
+  --bg-primary: #f7f7f5;
+  --bg-secondary: #eeedeb;
+  --bg-card: #fff;
+  --bg-card-hover: rgba(255, 255, 255, 0.92);
+  --bg-code-inline: #f5f5f4;
+  --bg-pre: #fafaf9;
+  --bg-blockquote: #f8fafc;
+  --bg-tag: #f5f5f4;
+  --bg-ticker: #1c1917;
+  --bg-news-hover: #fafaf9;
+  --bg-overlay: rgba(255, 255, 255, 0.72);
+  --bg-nav-btn: rgba(255, 255, 255, 0.75);
+
+  /* ── 文字 ── */
+  --text-primary: #1a1a1a;
+  --text-heading: #1c1917;
+  --text-secondary: #44403c;
+  --text-muted: #78716c;
+  --text-light: #a8a29e;
+  --text-code-inline: #c2410c;
+
+  /* ── 边框 ── */
+  --border-primary: #e7e5e4;
+  --border-light: #d6d3d1;
+  --border-card: rgba(0, 0, 0, 0.05);
+  --border-card-alt: rgba(0, 0, 0, 0.06);
+
+  /* ── 链接 ── */
+  --link: #2563eb;
+  --link-hover: #1c1917;
+
+  /* ── 阴影 ── */
+  --shadow-card: rgba(0, 0, 0, 0.03);
+  --shadow-card-hover: rgba(0, 0, 0, 0.06);
+
+  /* ── 强调色（涨跌 / 品牌） ── */
+  --accent-blue: #2563eb;
+  --accent-teal: #0d9488;
+  --accent-purple: #7c3aed;
+  --accent-amber: #d97706;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+
+  /* ── 语法高亮（浅色） ── */
+  --highlight-keyword: #2563eb;
+  --highlight-string: #b45309;
+  --highlight-number: #7c3aed;
+  --highlight-function: #0d9488;
+  --highlight-builtin: #d97706;
+  --highlight-comment: #a8a29e;
+  --highlight-type: #ca8a04;
+  --highlight-operator: #78716c;
+  --highlight-variable: #44403c;
+}
+
+/* ══════════════════════════════════════════
+   暗色模式
+   ══════════════════════════════════════════ */
+html.dark {
+  /* ── 背景 ── */
+  --bg-primary: #1a1a1c;
+  --bg-secondary: #1c1e22;
+  --bg-card: #232326;
+  --bg-card-hover: #2a2a2e;
+  --bg-code-inline: #2d2d34;
+  --bg-pre: #1e1e22;
+  --bg-blockquote: #1e293b;
+  --bg-tag: #2d2d34;
+  --bg-ticker: #0d0d0d;
+  --bg-news-hover: #2a2a2e;
+  --bg-overlay: rgba(30, 30, 35, 0.85);
+  --bg-nav-btn: rgba(40, 40, 45, 0.85);
+
+  /* ── 文字 ── */
+  --text-primary: #e4e0db;
+  --text-heading: #ede8e3;
+  --text-secondary: #b0a9a3;
+  --text-muted: #8a827e;
+  --text-light: #6b6562;
+  --text-code-inline: #fbbf24;
+
+  /* ── 边框 ── */
+  --border-primary: #333232;
+  --border-light: #44403c;
+  --border-card: rgba(255, 255, 255, 0.06);
+  --border-card-alt: rgba(255, 255, 255, 0.07);
+
+  /* ── 链接 ── */
+  --link: #60a5fa;
+  --link-hover: #ede8e3;
+
+  /* ── 阴影 ── */
+  --shadow-card: rgba(0, 0, 0, 0.2);
+  --shadow-card-hover: rgba(0, 0, 0, 0.3);
+
+  /* ── 强调色 ── */
+  --accent-blue: #60a5fa;
+  --accent-teal: #2dd4bf;
+  --accent-purple: #a78bfa;
+  --accent-amber: #fbbf24;
+  --accent-green: #34d399;
+  --accent-red: #f87171;
+
+  /* ── 语法高亮（暗色） ── */
+  --highlight-keyword: #93bbfd;
+  --highlight-string: #fbbf24;
+  --highlight-number: #a78bfa;
+  --highlight-function: #2dd4bf;
+  --highlight-builtin: #fbbf24;
+  --highlight-comment: #6b6562;
+  --highlight-type: #facc15;
+  --highlight-operator: #8a827e;
+  --highlight-variable: #b0a9a3;
+}

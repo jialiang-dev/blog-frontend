@@ -454,13 +454,18 @@ onUnmounted(() => {
 </template>
 
 <style scoped>
+
+html.dark .note-card {
+  --note-bg: var(--bg-card);
+}
+
 /* ═══════════════════════════════════════════
    页面基调 — 比摄影/随笔略深，沉稳
    ═══════════════════════════════════════════ */
 .finance-page {
   min-height: 100vh;
-  background: #eeedeb;
-  color: #1c1917;
+  background: var(--bg-secondary);
+  color: var(--text-heading);
   font-family: "PingFang SC", -apple-system, sans-serif;
   -webkit-font-smoothing: antialiased;
 }
@@ -472,14 +477,14 @@ onUnmounted(() => {
   display: flex; align-items: center; justify-content: space-between;
 }
 .back-link {
-  font-size: 0.88rem; color: #78716c;
+  font-size: 0.88rem; color: var(--text-muted);
   text-decoration: none; transition: color 0.2s;
 }
-.back-link:hover { color: #1a1a1a; }
+.back-link:hover { color: var(--text-primary); }
 .page-label {
   font-size: 0.72rem; font-weight: 650;
   letter-spacing: 0.12em; text-transform: uppercase;
-  color: #a8a29e;
+  color: var(--text-light);
 }
 
 /* ── 分区 ── */
@@ -491,10 +496,10 @@ onUnmounted(() => {
 .section-title {
   font-size: 1.4rem; font-weight: 700;
   letter-spacing: -0.01em;
-  margin: 0 0 8px; color: #1c1917;
+  margin: 0 0 8px; color: var(--text-heading);
 }
 .section-desc {
-  font-size: 0.85rem; color: #a8a29e;
+  font-size: 0.85rem; color: var(--text-light);
   margin: 0 0 24px;
 }
 .section-header {
@@ -504,7 +509,7 @@ onUnmounted(() => {
 
 /* ── 大盘：指数滚动条 ── */
 .index-ticker {
-  background: #1c1917; border-radius: 12px;
+  background: var(--bg-ticker); border-radius: 12px;
   padding: 10px 0; margin-bottom: 20px;
   overflow: hidden;
   position: relative;
@@ -535,8 +540,8 @@ onUnmounted(() => {
   font-family: "JetBrains Mono", "Fira Code", monospace;
   font-size: 0.82rem; font-weight: 650;
 }
-.idx-change.up { color: #ef4444; }
-.idx-change.down { color: #10b981; }
+.idx-change.up { color: var(--accent-red); }
+.idx-change.down { color: var(--accent-green); }
 
 @keyframes ticker-scroll {
   from { transform: translateX(0); }
@@ -555,11 +560,11 @@ onUnmounted(() => {
 .wisdom-text {
   font-family: "Noto Serif SC", "Source Han Serif SC", Georgia, "Times New Roman", serif;
   font-size: 1.35rem; line-height: 1.9;
-  color: #1c1917; margin: 0 0 18px;
+  color: var(--text-heading); margin: 0 0 18px;
   font-style: italic; letter-spacing: 0.02em;
 }
 .wisdom-author {
-  font-size: 0.85rem; color: #a8a29e;
+  font-size: 0.85rem; color: var(--text-light);
   margin: 0; letter-spacing: 0.04em;
 }
 
@@ -570,8 +575,8 @@ onUnmounted(() => {
   gap: 16px; margin-top: 12px;
 }
 .stock-card {
-  background: #fff; border-radius: 14px;
-  border: 1px solid rgba(0,0,0,0.05);
+  background: var(--bg-card); border-radius: 14px;
+  border: 1px solid var(--border-card);
   padding: 18px 20px 12px;
 }
 .sc-top {
@@ -579,32 +584,32 @@ onUnmounted(() => {
   margin-bottom: 8px;
 }
 .sc-info { display: flex; flex-direction: column; gap: 2px; }
-.sc-name { font-size: 0.92rem; font-weight: 650; color: #1c1917; }
+.sc-name { font-size: 0.92rem; font-weight: 650; color: var(--text-heading); }
 .sc-code {
   font-family: "JetBrains Mono", monospace;
-  font-size: 0.73rem; color: #a8a29e;
+  font-size: 0.73rem; color: var(--text-light);
 }
 .sc-price-block { text-align: right; }
 .sc-price {
   font-family: "JetBrains Mono", monospace;
-  font-size: 1rem; font-weight: 650; color: #1c1917;
+  font-size: 1rem; font-weight: 650; color: var(--text-heading);
   display: block;
 }
 .sc-change {
   font-family: "JetBrains Mono", monospace;
   font-size: 0.82rem; font-weight: 600;
 }
-.sc-change.up { color: #ef4444; }
-.sc-change.down { color: #10b981; }
+.sc-change.up { color: var(--accent-red); }
+.sc-change.down { color: var(--accent-green); }
 
 /* ── 便利贴 ── */
 .btn-add {
-  background: none; border: 1px solid #d6d3d1;
-  color: #78716c; font-size: 0.82rem;
+  background: none; border: 1px solid var(--border-light);
+  color: var(--text-muted); font-size: 0.82rem;
   padding: 6px 16px; border-radius: 8px;
   cursor: pointer; transition: all 0.2s;
 }
-.btn-add:hover { border-color: #a8a29e; color: #1c1917; }
+.btn-add:hover { border-color: var(--text-light); color: var(--text-heading); }
 
 .notes-grid {
   display: grid;
@@ -615,11 +620,11 @@ onUnmounted(() => {
 .note-card {
   background: var(--note-bg, #f1f5f9);
   border-radius: 12px;
-  border: 1px solid rgba(0,0,0,0.05);
+  border: 1px solid var(--border-card);
   display: flex; overflow: hidden;
   transition: box-shadow 0.2s, transform 0.2s;
 }
-.note-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.04); }
+.note-card:hover { box-shadow: 0 2px 12px var(--shadow-card); }
 .note-bar {
   width: 4px; flex-shrink: 0;
   background: var(--note-bar, #94a3b8);
@@ -631,43 +636,43 @@ onUnmounted(() => {
 .note-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
 .note-asset {
   font-size: 0.68rem; font-weight: 650; letter-spacing: 0.06em;
-  color: #78716c; background: rgba(0,0,0,0.06);
+  color: var(--text-muted); background: rgba(0,0,0,0.06);
   padding: 2px 8px; border-radius: 4px;
 }
 .note-delete {
-  background: none; border: none; color: #a8a29e;
+  background: none; border: none; color: var(--text-light);
   font-size: 1rem; cursor: pointer; padding: 0 2px; line-height: 1;
   opacity: 0; transition: opacity 0.2s;
 }
 .note-card:hover .note-delete { opacity: 1; }
 .note-title-display {
-  font-size: 0.9rem; font-weight: 650; color: #1c1917;
+  font-size: 0.9rem; font-weight: 650; color: var(--text-heading);
   margin-bottom: 4px;
 }
 .note-content-display {
-  font-size: 0.87rem; line-height: 1.6; color: #44403c;
+  font-size: 0.87rem; line-height: 1.6; color: var(--text-secondary);
   cursor: text; white-space: pre-wrap;
 }
 .note-time {
-  font-size: 0.7rem; color: #a8a29e;
+  font-size: 0.7rem; color: var(--text-light);
   margin-top: 8px; letter-spacing: 0.03em;
 }
 
 /* 编辑态 */
 .note-input-title {
   width: 100%; border: none; background: transparent;
-  font-size: 0.9rem; font-weight: 650; color: #1c1917;
+  font-size: 0.9rem; font-weight: 650; color: var(--text-heading);
   outline: none; padding: 0; margin-bottom: 4px;
 }
 .note-input-code {
   width: 100%; border: none; background: transparent;
-  font-size: 0.75rem; color: #78716c; outline: none;
+  font-size: 0.75rem; color: var(--text-muted); outline: none;
   padding: 0; margin-bottom: 6px;
   font-family: "JetBrains Mono", monospace;
 }
 .note-textarea {
   width: 100%; border: none; background: transparent;
-  font-size: 0.87rem; line-height: 1.6; color: #44403c;
+  font-size: 0.87rem; line-height: 1.6; color: var(--text-secondary);
   outline: none; resize: none; padding: 0;
   font-family: inherit;
 }
@@ -682,34 +687,34 @@ onUnmounted(() => {
   transition: transform 0.15s;
 }
 .color-dot:hover { transform: scale(1.2); }
-.color-dot.active { border-color: #1c1917; transform: scale(1.15); }
+.color-dot.active { border-color: var(--text-heading); transform: scale(1.15); }
 .note-action-btns { display: flex; gap: 6px; }
 .note-btn-cancel {
-  font-size: 0.78rem; color: #a8a29e;
+  font-size: 0.78rem; color: var(--text-light);
   background: none; border: none; cursor: pointer; padding: 4px 8px;
 }
 .note-btn-save {
-  font-size: 0.78rem; font-weight: 600; color: #fff;
-  background: #1c1917; border: none;
+  font-size: 0.78rem; font-weight: 600; color: var(--bg-primary);
+  background: var(--bg-ticker); border: none;
   padding: 4px 14px; border-radius: 6px; cursor: pointer;
 }
 
 .notes-empty {
   margin-top: 16px; padding: 48px;
-  text-align: center; color: #a8a29e; font-size: 0.9rem;
-  border: 2px dashed #d6d3d1; border-radius: 14px;
+  text-align: center; color: var(--text-light); font-size: 0.9rem;
+  border: 2px dashed var(--border-light); border-radius: 14px;
   cursor: pointer; transition: border-color 0.2s;
 }
-.notes-empty:hover { border-color: #a8a29e; }
+.notes-empty:hover { border-color: var(--text-light); }
 
 /* ── 财经资讯 ── */
 .news-list {
-  background: #fff; border-radius: 14px;
-  border: 1px solid rgba(0,0,0,0.05);
+  background: var(--bg-card); border-radius: 14px;
+  border: 1px solid var(--border-card);
   overflow-y: auto;
   max-height: 440px;  /* 约 10 条可见，其余滚动 */
   scrollbar-width: thin;
-  scrollbar-color: #d6d3d1 transparent;
+  scrollbar-color: var(--border-light) transparent;
 }
 .news-row {
   display: grid;
@@ -717,23 +722,23 @@ onUnmounted(() => {
   align-items: center; gap: 12px;
   padding: 12px 20px;
   text-decoration: none;
-  border-bottom: 1px solid #f5f5f4;
+  border-bottom: 1px solid var(--border-primary);
   transition: background 0.15s;
 }
 .news-row:last-child { border-bottom: none; }
-.news-row:hover { background: #fafaf9; }
+.news-row:hover { background: var(--bg-news-hover); }
 .news-source {
   font-size: 0.72rem; font-weight: 650;
-  color: #a8a29e; letter-spacing: 0.04em;
+  color: var(--text-light); letter-spacing: 0.04em;
   text-transform: uppercase; white-space: nowrap;
 }
 .news-title {
-  font-size: 0.88rem; color: #44403c;
+  font-size: 0.88rem; color: var(--text-secondary);
   overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
 }
-.news-row:hover .news-title { color: #2563eb; }
+.news-row:hover .news-title { color: var(--link); }
 .news-time {
-  font-size: 0.75rem; color: #a8a29e;
+  font-size: 0.75rem; color: var(--text-light);
   text-align: right; white-space: nowrap;
 }
 
@@ -743,11 +748,11 @@ onUnmounted(() => {
   max-width: 1100px; margin: 0 auto;
   padding: 32px 28px 60px;
   display: flex; justify-content: space-between; align-items: center;
-  border-top: 1px solid #d6d3d1;
+  border-top: 1px solid var(--border-light);
 }
-.page-footer a { font-size: 0.85rem; color: #78716c; text-decoration: none; }
-.page-footer a:hover { color: #1c1917; }
-.footer-note { font-size: 0.78rem; color: #a8a29e; }
+.page-footer a { font-size: 0.85rem; color: var(--text-muted); text-decoration: none; }
+.page-footer a:hover { color: var(--text-heading); }
+.footer-note { font-size: 0.78rem; color: var(--text-light); }
 
 /* ── 响应式 ── */
 @media (max-width: 768px) {

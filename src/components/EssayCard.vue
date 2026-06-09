@@ -36,7 +36,7 @@ function fmt(date) {
 .card {
   padding: 28px 0;
   cursor: pointer;
-  border-bottom: 1px solid #e7e5e4;
+  border-bottom: 1px solid var(--border-primary);
   animation: fade-up 0.5s ease both;
   transition: padding-left 0.3s ease;
 }
@@ -50,7 +50,7 @@ function fmt(date) {
 .card-date {
   display: block;
   font-size: 0.78rem;
-  color: #a8a29e;
+  color: var(--text-light);
   letter-spacing: 0.04em;
   margin-bottom: 8px;
   font-family: "JetBrains Mono", "Fira Code", monospace;
@@ -62,7 +62,7 @@ function fmt(date) {
   font-weight: 650;
   letter-spacing: -0.01em;
   margin: 0 0 8px;
-  color: #1c1917;
+  color: var(--text-heading);
   transition: color 0.2s;
 }
 .card:hover .card-title { color: #2563eb; }
@@ -70,7 +70,7 @@ function fmt(date) {
 .card-summary {
   font-size: 0.92rem;
   line-height: 1.65;
-  color: #78716c;
+  color: var(--text-muted);
   margin: 0 0 12px;
 }
 
@@ -82,8 +82,8 @@ function fmt(date) {
 .card-tag {
   font-size: 0.7rem;
   font-weight: 550;
-  color: #78716c;
-  background: #f5f5f4;
+  color: var(--text-muted);
+  background: var(--bg-tag);
   padding: 3px 10px;
   border-radius: 6px;
   letter-spacing: 0.03em;
@@ -91,7 +91,7 @@ function fmt(date) {
 .card-arrow {
   margin-left: auto;
   font-size: 0.9rem;
-  color: #d6d3d1;
+  color: var(--border-light);
   transition: transform 0.25s ease, color 0.2s;
 }
 .card:hover .card-arrow {

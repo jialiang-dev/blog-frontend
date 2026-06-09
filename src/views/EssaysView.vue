@@ -39,12 +39,13 @@ onMounted(() => {
   padding: 100px 24px 80px;
   min-height: 100vh;
   font-family: "PingFang SC", -apple-system, sans-serif;
+  background: var(--bg-primary);
 }
 
 .header { margin-bottom: 48px; }
 .back {
   font-size: 0.85rem;
-  color: #a8a29e;
+  color: var(--text-light);
   text-decoration: none;
   transition: color 0.2s;
 }
@@ -55,11 +56,11 @@ onMounted(() => {
   font-weight: 700;
   letter-spacing: -0.02em;
   margin: 16px 0 8px;
-  color: #1c1917;
+  color: var(--text-heading);
 }
 .page-desc {
   font-size: 0.95rem;
-  color: #78716c;
+  color: var(--text-muted);
   margin: 0;
 }
 
@@ -67,13 +68,13 @@ onMounted(() => {
 
 .loading, .empty {
   text-align: center;
-  color: #a8a29e;
+  color: var(--text-light);
   padding: 60px 0;
   font-size: 0.92rem;
   line-height: 1.8;
 }
 .empty code {
-  background: #f5f5f4;
+  background: var(--bg-code-inline);
   padding: 2px 6px;
   border-radius: 4px;
   font-size: 0.88em;
@@ -83,7 +84,7 @@ onMounted(() => {
   display: block;
   text-align: center;
   font-size: 0.85rem;
-  color: #a8a29e;
+  color: var(--text-light);
   text-decoration: none;
   transition: color 0.2s;
 }
