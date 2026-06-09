@@ -68,18 +68,19 @@
   font-weight: 480;
 }
 
-/* ── 代码块（highlight.js 渲染） ── */
+/* ── 代码块 ── */
 .prose pre {
   margin: 1.4em 0;
   border-radius: 10px;
   overflow-x: auto;
   font-size: 0.88rem;
   line-height: 1.6;
-  background: #1c1917;
+  background: #fafaf9;
+  border: 1px solid #e7e5e4;
+  color: #44403c;
 }
 .prose pre code {
   background: transparent;
-  color: inherit;
   padding: 0;
   font-size: inherit;
 }
@@ -87,6 +88,43 @@
   display: block;
   padding: 20px 24px;
 }
+
+/* ── 自定义语法高亮（与博客色板统一）── */
+/* 关键词         → 蓝，呼应链接色 */
+.prose pre .hljs-keyword,
+.prose pre .hljs-doctag { color: #2563eb; }
+/* 字符串         → 暖棕 */
+.prose pre .hljs-string,
+.prose pre .hljs-regexp { color: #b45309; }
+/* 数字 / 字面量  → 紫 */
+.prose pre .hljs-number,
+.prose pre .hljs-literal { color: #7c3aed; }
+/* 函数 / 类名    → 青 */
+.prose pre .hljs-title,
+.prose pre .hljs-title.function_ { color: #0d9488; }
+/* 内置对象       → 琥珀 */
+.prose pre .hljs-built_in,
+.prose pre .hljs-symbol { color: #d97706; }
+/* 注释           → 浅灰 */
+.prose pre .hljs-comment { color: #a8a29e; }
+/* 类型           → 金 */
+.prose pre .hljs-type { color: #ca8a04; }
+/* 属性           → 蓝 */
+.prose pre .hljs-attr,
+.prose pre .hljs-attribute { color: #2563eb; }
+/* 运算符 / 标点   → 中灰 */
+.prose pre .hljs-operator,
+.prose pre .hljs-punctuation { color: #78716c; }
+/* 变量           → 正文色 */
+.prose pre .hljs-variable { color: #44403c; }
+/* 标签名         → 青（同函数） */
+.prose pre .hljs-name,
+.prose pre .hljs-selector-tag { color: #0d9488; }
+/* 选择器 class   → 蓝（同属性） */
+.prose pre .hljs-selector-class { color: #2563eb; }
+/* 强调 / 加粗    同正文 */
+.prose pre .hljs-emphasis { color: inherit; font-style: italic; }
+.prose pre .hljs-strong { color: inherit; font-weight: 700; }
 
 /* ── 引用块 ── */
 .prose blockquote {

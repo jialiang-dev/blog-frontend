@@ -3,8 +3,7 @@ import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import katex from 'katex'
 
-// 样式：highlight.js 主题 + katex 排版
-import 'highlight.js/styles/github-dark.css'
+// 样式：自定义代码块配色 + katex 排版（不再引入 highlight.js 主题）
 import 'katex/dist/katex.min.css'
 import '../styles/article.css'
 
