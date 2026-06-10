@@ -1,6 +1,6 @@
 ---
 title: 香港VPS拉不动 Docker Hub，我真服了
-date: 2026-05-22
+date: 2026-05-18
 summary: 每次 docker pull 都像抽奖，有时候能拉下来，有时候挂代理都不行。记录一下这个让人血压升高的破事。
 tags: [技术, 运维, 服务器, 吐槽]
 ---
@@ -23,7 +23,7 @@ tags: [技术, 运维, 服务器, 吐槽]
 FROM node:24-alpine
 ```
 
-就这里，不管是在WSL上还是香港VPS上都得卡十分钟。**压根连不上**。
+就这里，不管是在WSL上还是香港VPS上都得卡十分钟。**连不上**。
 
 ```
 ERROR: failed to do request: Head "https://registry-1.docker.io/v2/library/node/manifests/24-alpine":
@@ -44,15 +44,15 @@ dial tcp 202.160.128.40:443: i/o timeout
 第一步：确认不是服务器断网
 
 ```bash
-# 试试国内站点
+# 试国内站点
 curl https://www.baidu.com
 # 200 OK，国内正常
 
-# 试试国外站点
+# 试国外站点
 curl https://www.google.com
-# 000 timeout，国外全炸
+# 000 timeout，国外全炸 
 
-# 试试 Docker Hub
+# 试Docker Hub
 curl https://registry-1.docker.io
 # 也超时
 ```
