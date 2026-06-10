@@ -53,7 +53,7 @@ function toggleAlbum(albumId) {
         :class="{ reverse: i % 2 === 1 }"
         @click="openLightbox(photo.id)"
       >
-        <img :src="photo.image" :alt="photo.title" />
+        <img :src="photo.image" :alt="photo.title" loading="lazy" decoding="async" />
         <div class="info">
           <h2>{{ photo.title }}</h2>
           <p>{{ getAlbumOfPhoto(photo.id)?.title || '' }}</p>

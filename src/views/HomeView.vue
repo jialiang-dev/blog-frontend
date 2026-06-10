@@ -13,11 +13,11 @@
       <h1>Alvin Shan</h1>
 
       <p class="role">
-        Developer / Writer / Observer
+        Developer / Photographer / Observer
       </p>
 
       <p class="intro">
-        我记录市场、城市、摄影与生活。
+        记录市场、城市、摄影与生活。
       </p>
 
       <div class="links">
@@ -82,12 +82,7 @@
 import { ref, onMounted, onUnmounted } from "vue";
 
 const footerMessages = [
-  "今天市场情绪不错。",
-  "城市正在慢慢入夜。",
-  "你已经停留了一会儿。",
-  "保持思考。",
-  "光影永远值得记录。",
-  "风险与机会总是并存。"
+  "欢迎浏览。"
 ];
 
 const footerText = ref("");
@@ -172,25 +167,26 @@ onUnmounted(() => {
   color: var(--text-primary);
 }
 
-/* 背景光晕 — 全程 GPU 合成层，不触发 Layout/Paint */
+/* 背景光晕 — 纯 GPU 合成层（不用 filter，无 Paint 开销） */
 .glow {
   position: absolute;
   top: 0;
   left: 0;
 
-  width: 500px;
-  height: 500px;
+  width: 800px;
+  height: 800px;
 
   background: radial-gradient(
-    circle,
-    rgba(5, 162, 241, 0.18) 0%,
-    rgba(50, 150, 238, 0.07) 30%,
+    circle at center,
+    rgba(5, 162, 241, 0.10) 0%,
+    rgba(50, 150, 238, 0.05) 15%,
+    rgba(80, 180, 250, 0.025) 30%,
+    rgba(100, 200, 255, 0.008) 50%,
     transparent 70%
   );
 
   pointer-events: none;
-  filter: blur(40px);
-  will-change: transform;
+  contain: layout style paint;
   z-index: 0;
 }
 
@@ -289,7 +285,7 @@ h1 {
 
   font-size: 15px;
 
-  transition: all 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .links a::after {
@@ -328,11 +324,26 @@ h1 {
 
   background: var(--bg-overlay);
   border: 1px solid var(--border-card-alt);
-  box-shadow: 0 1px 3px var(--shadow-card);
 
-  transition: transform 0.3s ease, box-shadow 0.3s ease, background 0.3s ease;
+  /* 用伪元素模拟阴影，hover 时只改 opacity（GPU），避免 box-shadow 触发 Paint */
+  transition: transform 0.4s cubic-bezier(0.25, 0.1, 0.25, 1),
+              background 0.35s ease;
 
   overflow: hidden;
+  will-change: transform;
+}
+
+/* 阴影用伪元素 + opacity 过渡，零 Paint */
+.nav-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 28px;
+  box-shadow: 0 10px 40px var(--shadow-card-hover);
+  opacity: 0;
+  transition: opacity 0.35s ease;
+  pointer-events: none;
+  z-index: -1;
 }
 
 .nav-card::before {
@@ -353,15 +364,15 @@ h1 {
 }
 
 .nav-card:hover {
-  transform: translateY(-8px);
-
-  box-shadow:
-    0 10px 40px var(--shadow-card-hover);
-
+  transform: translateY(-6px) scale(1.01);
   background: var(--bg-card-hover);
 }
 
 .nav-card:hover::before {
+  opacity: 1;
+}
+
+.nav-card:hover::after {
   opacity: 1;
 }
 
@@ -398,7 +409,7 @@ h1 {
 
   color: var(--text-light);
 
-  transition: transform 0.3s ease;
+  transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
 }
 
 .nav-card:hover .arrow {

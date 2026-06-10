@@ -4,7 +4,10 @@
       "Bash(mkdir -p /home/alvin/projects/blog-backend/src/main/java/dev/jialiang)",
       "Bash(mv /home/alvin/projects/blog-backend/src/main/java/com/yourdomain/personalsite /home/alvin/projects/blog-backend/src/main/java/dev/jialiang/)",
       "Bash(rm -rf /home/alvin/projects/blog-backend/src/main/java/com)",
-      "Bash(git add *)"
+      "Bash(git add *)",
+      "Bash(find /home/alvin/projects/blog-backend/src -type f -name \"*.java\" | sort)",
+      "Read(//home/alvin/projects/blog-backend/src/**)",
+      "Bash(python3 -c \"import sys,json; d=json.load\\(sys.stdin\\); print\\(json.dumps\\(d.get\\('dependencies',{}\\), indent=2\\)\\)\")"
     ]
   }
 }

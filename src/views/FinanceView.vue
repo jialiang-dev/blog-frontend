@@ -281,21 +281,36 @@ function timeAgo(dateStr) {
 // ═══════════════════════════════════════════
 // 生命周期
 // ═══════════════════════════════════════════
-// 页面不可见时暂停轮询，节省资源
-let pageVisible = true
-function onVisibilityChange() {
-  pageVisible = !document.hidden
-}
-document.addEventListener('visibilitychange', onVisibilityChange)
-
-// 轮询时检查页面可见性
+// 页面不可见时彻底停掉轮询和动画，切回来再恢复
 function startStockPoll() {
   fetchStockQuotes()
-  stockTimer = setInterval(() => { if (pageVisible) fetchStockQuotes() }, 5000)
+  stockTimer = setInterval(fetchStockQuotes, 5000)
 }
 function startIndexPoll() {
   fetchIndices()
-  idxTimer = setInterval(() => { if (pageVisible) fetchIndices() }, 5000)
+  idxTimer = setInterval(fetchIndices, 5000)
+}
+function stopAllPolls() {
+  if (stockTimer) { clearInterval(stockTimer); stockTimer = null }
+  if (idxTimer) { clearInterval(idxTimer); idxTimer = null }
+}
+
+// 暂停/恢复 ticker 滚动动画
+const tickerEl = ref(null)
+function pauseTicker(pause) {
+  const el = tickerEl.value
+  if (el) el.style.animationPlayState = pause ? 'paused' : 'running'
+}
+
+function onVisibilityChange() {
+  if (document.hidden) {
+    stopAllPolls()
+    pauseTicker(true)
+  } else {
+    startStockPoll()
+    startIndexPoll()
+    pauseTicker(false)
+  }
 }
 
 onMounted(() => {
@@ -304,11 +319,11 @@ onMounted(() => {
   startWisdomRotation()
   fetchNotes()
   fetchNews()
+  document.addEventListener('visibilitychange', onVisibilityChange)
 })
 
 onUnmounted(() => {
-  clearInterval(idxTimer); idxTimer = null
-  clearInterval(stockTimer); stockTimer = null
+  stopAllPolls()
   clearInterval(wisdomTimer); wisdomTimer = null
   document.removeEventListener('visibilitychange', onVisibilityChange)
 })
@@ -329,7 +344,7 @@ onUnmounted(() => {
 
       <!-- 指数滚动条 -->
       <div class="index-ticker">
-        <div class="index-ticker-inner">
+        <div ref="tickerEl" class="index-ticker-inner">
           <span v-for="idx in indexData" :key="idx.name" class="idx-item">
             <span class="idx-name">{{ idx.name }}</span>
             <span class="idx-price">{{ fmtPrice(idx.price) }}</span>
@@ -367,7 +382,7 @@ onUnmounted(() => {
           <div class="sc-top">
             <div class="sc-info">
               <span class="sc-name">{{ stockData[s.code]?.stockName || s.name }}</span>
-              <span class="sc-code">{{ s.code }}</span>
+              <span class="sc-code">{{ s.code.replace(/^(sz|sh)/, '').replace(/^gb_/, '').toUpperCase() }}</span>
             </div>
             <div class="sc-price-block">
               <span class="sc-price">{{ (stockData[s.code]?.currentPrice || 0).toFixed(2) }}</span>

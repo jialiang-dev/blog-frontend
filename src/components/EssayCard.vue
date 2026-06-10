@@ -21,27 +21,36 @@ function fmt(date) {
 </script>
 
 <template>
-  <article class="card" :style="{ animationDelay: index * 0.08 + 's' }" @click="go">
-    <time class="card-date">{{ fmt(post.date) }}</time>
-    <h2 class="card-title">{{ post.title }}</h2>
-    <p class="card-summary">{{ post.summary }}</p>
-    <div class="card-footer">
-      <span v-for="t in post.tags" :key="t" class="card-tag">{{ t }}</span>
-      <span class="card-arrow">→</span>
+  <article class="card" @click="go">
+    <div class="card-inner" :style="{ animationDelay: index * 0.08 + 's' }">
+      <time class="card-date">{{ fmt(post.date) }}</time>
+      <h2 class="card-title">{{ post.title }}</h2>
+      <p class="card-summary">{{ post.summary }}</p>
+      <div class="card-footer">
+        <span v-for="t in post.tags" :key="t" class="card-tag">{{ t }}</span>
+        <span class="card-arrow">→</span>
+      </div>
     </div>
   </article>
 </template>
 
 <style scoped>
 .card {
-  padding: 28px 0;
   cursor: pointer;
   border-bottom: 1px solid var(--border-primary);
-  animation: fade-up 0.5s ease both;
-  transition: padding-left 0.3s ease;
+  /* 内层用 opacity 动画，外层用 transform 过渡，互不干扰 */
+  transition: transform 0.35s cubic-bezier(0.25, 0.1, 0.25, 1),
+              background 0.25s ease;
+  border-radius: 8px;
 }
 .card:hover {
-  padding-left: 16px;
+  transform: translateX(12px);
+  background: rgba(0,0,0,0.015);
+}
+
+.card-inner {
+  padding: 28px 0;
+  animation: fade-up 0.5s ease both;
 }
 .card:last-child {
   border-bottom: none;
