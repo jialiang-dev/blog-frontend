@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useHead } from '@unhead/vue'
 import { usePhotos } from '../composables/usePhotos.js'
 
 const route = useRoute()
@@ -8,6 +9,23 @@ const router = useRouter()
 const { photos, getById } = usePhotos()
 
 const photo = computed(() => getById(route.params.id))
+
+const title = computed(() => photo.value?.title
+  ? `${photo.value.title} - 摄影 - Alvin Shan`
+  : '摄影 - Alvin Shan')
+const description = computed(() => photo.value?.description || 'Alvin Shan 的摄影作品')
+
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:title', content: title },
+    { property: 'og:description', content: description },
+    { property: 'og:url', content: computed(() => `https://jialiang.dev/photography/${route.params.id}`) },
+    { name: 'twitter:title', content: title },
+    { name: 'twitter:description', content: description },
+  ],
+})
 
 const currentIndex = computed(() =>
   photos.value.findIndex(p => p.id === route.params.id)

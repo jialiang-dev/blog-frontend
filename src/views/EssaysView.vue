@@ -1,9 +1,22 @@
 <script setup>
 import { onMounted } from 'vue'
+import { useHead } from '@unhead/vue'
 import { usePosts } from '../composables/usePosts.js'
 import EssayCard from '../components/EssayCard.vue'
 
 const { posts, loading, reload } = usePosts()
+
+useHead({
+  title: '随笔 - Alvin Shan',
+  meta: [
+    { name: 'description', content: 'Alvin Shan 的技术沉淀、股票市场观察与生活随想。' },
+    { property: 'og:title', content: '随笔 - Alvin Shan' },
+    { property: 'og:description', content: 'Alvin Shan 的技术沉淀、股票市场观察与生活随想。' },
+    { property: 'og:url', content: 'https://jialiang.dev/essays' },
+    { name: 'twitter:title', content: '随笔 - Alvin Shan' },
+    { name: 'twitter:description', content: 'Alvin Shan 的技术沉淀、股票市场观察与生活随想。' },
+  ],
+})
 
 onMounted(() => {
   if (!posts.value.length) reload()

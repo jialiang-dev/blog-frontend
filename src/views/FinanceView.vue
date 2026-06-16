@@ -1,6 +1,19 @@
 <script setup>
 import { ref, reactive, onMounted, onUnmounted } from 'vue'
+import { useHead } from '@unhead/vue'
 import api from '../api.js'
+
+useHead({
+  title: '股票观察 - Alvin Shan',
+  meta: [
+    { name: 'description', content: 'Alvin Shan 的市场观察、股票行情与投资笔记。' },
+    { property: 'og:title', content: '股票观察 - Alvin Shan' },
+    { property: 'og:description', content: 'Alvin Shan 的市场观察、股票行情与投资笔记。' },
+    { property: 'og:url', content: 'https://jialiang.dev/finance' },
+    { name: 'twitter:title', content: '股票观察 - Alvin Shan' },
+    { name: 'twitter:description', content: 'Alvin Shan 的市场观察、股票行情与投资笔记。' },
+  ],
+})
 
 // ═══════════════════════════════════════════
 // 颜色

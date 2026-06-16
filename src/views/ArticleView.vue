@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useHead } from '@unhead/vue'
 import { usePosts } from '../composables/usePosts.js'
 import MarkdownRenderer from '../components/MarkdownRenderer.vue'
 
@@ -9,6 +10,44 @@ const router = useRouter()
 const { getBySlug } = usePosts()
 
 const post = computed(() => getBySlug(route.params.slug))
+
+const title = computed(() => post.value ? `${post.value.title} - Alvin Shan` : '文章不存在 - Alvin Shan')
+const description = computed(() => post.value?.summary || 'Alvin Shan 的个人博客随笔')
+const url = computed(() => `https://jialiang.dev/essays/${route.params.slug}`)
+
+useHead({
+  title,
+  meta: [
+    { name: 'description', content: description },
+    { property: 'og:type', content: 'article' },
+    { property: 'og:title', content },
+    { property: 'og:description', content: description },
+    { property: 'og:url', content: url },
+    { name: 'twitter:title', content },
+    { name: 'twitter:description', content: description },
+  ],
+  script: [
+    {
+      type: 'application/ld+json',
+      children: computed(() => JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'BlogPosting',
+        'headline': post.value?.title || '',
+        'description': post.value?.summary || '',
+        'datePublished': post.value?.date || '',
+        'author': {
+          '@type': 'Person',
+          'name': 'Alvin Shan'
+        },
+        'url': url.value,
+        'mainEntityOfPage': {
+          '@type': 'WebPage',
+          '@id': url.value
+        }
+      }, null, 2)),
+    },
+  ],
+})
 
 function fmt(date) {
   if (!date) return ''

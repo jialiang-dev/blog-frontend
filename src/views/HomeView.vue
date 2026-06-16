@@ -80,6 +80,19 @@
 
 <script setup>
 import { ref, onMounted, onUnmounted } from "vue";
+import { useHead } from '@unhead/vue'
+
+useHead({
+  title: 'Alvin Shan - 技术、市场与摄影',
+  meta: [
+    { name: 'description', content: 'Alvin Shan 的个人博客，记录技术沉淀、股票市场观察、城市摄影与生活随想。' },
+    { property: 'og:title', content: 'Alvin Shan - 技术、市场与摄影' },
+    { property: 'og:description', content: 'Alvin Shan 的个人博客，记录技术沉淀、股票市场观察、城市摄影与生活随想。' },
+    { property: 'og:url', content: 'https://jialiang.dev/' },
+    { name: 'twitter:title', content: 'Alvin Shan - 技术、市场与摄影' },
+    { name: 'twitter:description', content: 'Alvin Shan 的个人博客，记录技术沉淀、股票市场观察、城市摄影与生活随想。' },
+  ],
+})
 
 const footerMessages = [
   "欢迎浏览。"

@@ -1,7 +1,20 @@
 <script setup>
 import { ref, computed } from 'vue'
+import { useHead } from '@unhead/vue'
 import { usePhotos } from '../composables/usePhotos.js'
 import PhotoLightbox from '../components/PhotoLightbox.vue'
+
+useHead({
+  title: '摄影 - Alvin Shan',
+  meta: [
+    { name: 'description', content: 'Alvin Shan 的城市、街道与光影摄影作品。' },
+    { property: 'og:title', content: '摄影 - Alvin Shan' },
+    { property: 'og:description', content: 'Alvin Shan 的城市、街道与光影摄影作品。' },
+    { property: 'og:url', content: 'https://jialiang.dev/photography' },
+    { name: 'twitter:title', content: '摄影 - Alvin Shan' },
+    { name: 'twitter:description', content: 'Alvin Shan 的城市、街道与光影摄影作品。' },
+  ],
+})
 
 const { getFeatured, getAlbums, getAlbumOfPhoto } = usePhotos()
 
