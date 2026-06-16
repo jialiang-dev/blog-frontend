@@ -14,38 +14,26 @@ const post = computed(() => getBySlug(route.params.slug))
 const title = computed(() => post.value ? `${post.value.title} - Alvin Shan` : '文章不存在 - Alvin Shan')
 const description = computed(() => post.value?.summary || 'Alvin Shan 的个人博客随笔')
 const url = computed(() => `https://jialiang.dev/essays/${route.params.slug}`)
+const ldJson = computed(() => post.value ? JSON.stringify({
+  '@context': 'https://schema.org',
+  '@type': 'BlogPosting',
+  'headline': post.value.title,
+  'description': post.value.summary,
+  'datePublished': post.value.date,
+  'author': { '@type': 'Person', 'name': 'Alvin Shan' },
+  'url': url.value,
+}) : '')
 
 useHead({
   title,
   meta: [
     { name: 'description', content: description },
     { property: 'og:type', content: 'article' },
-    { property: 'og:title', content },
+    { property: 'og:title', content: title },
     { property: 'og:description', content: description },
     { property: 'og:url', content: url },
-    { name: 'twitter:title', content },
+    { name: 'twitter:title', content: title },
     { name: 'twitter:description', content: description },
-  ],
-  script: [
-    {
-      type: 'application/ld+json',
-      children: computed(() => JSON.stringify({
-        '@context': 'https://schema.org',
-        '@type': 'BlogPosting',
-        'headline': post.value?.title || '',
-        'description': post.value?.summary || '',
-        'datePublished': post.value?.date || '',
-        'author': {
-          '@type': 'Person',
-          'name': 'Alvin Shan'
-        },
-        'url': url.value,
-        'mainEntityOfPage': {
-          '@type': 'WebPage',
-          '@id': url.value
-        }
-      }, null, 2)),
-    },
   ],
 })
 
@@ -67,6 +55,8 @@ function fmt(date) {
 
     <!-- 文章 -->
     <template v-else>
+      <!-- JSON-LD 结构化数据（模板直出，不经过 unhead） -->
+      <component :is="'script'" type="application/ld+json" v-if="ldJson">{{ ldJson }}</component>
       <header class="article-header">
         <router-link to="/essays" class="back">← 随笔</router-link>
         <h1 class="article-title">{{ post.title }}</h1>
